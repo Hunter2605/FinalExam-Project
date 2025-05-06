@@ -1,3 +1,5 @@
+package model;
+
 import java.sql.Date;
 public class Repair extends Base {
     private String deviceType;

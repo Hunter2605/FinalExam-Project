@@ -1,3 +1,4 @@
+package model;
 public class Part extends Base {
     private String name;
     private int quantity;

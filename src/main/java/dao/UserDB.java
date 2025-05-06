@@ -1,14 +1,12 @@
 package dao;
 
+import model.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class User {
-    public User(int id, String username, String password, String userType) {
-    }
-
+public class UserDB {
     public User authenticateUser(String username, String password) throws ClassNotFoundException, SQLException {
         String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
         try (Connection conn = DatabaseConnection.getConnection();
