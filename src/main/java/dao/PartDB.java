@@ -36,6 +36,17 @@ public class PartDB {
             stmt.executeUpdate();
         }
     }
+    public void updatePartQuantity(int partId, int quantity) throws SQLException {
+        String sql = "UPDATE parts SET quantity = quantity + ? WHERE id = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, quantity);
+            stmt.setInt(2, partId);
+            stmt.executeUpdate();
+        }
+    }
 
     public Part getPartByName(String name) throws SQLException {
         String sql = "SELECT * FROM parts WHERE name = ?";

@@ -53,4 +53,25 @@ public class OrderedPartDB {
             stmt.executeUpdate();
         }
     }
+    public OrderedPart getOrderedPartById(int orderId) throws SQLException {
+        String sql = "SELECT * FROM ordered_parts WHERE id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, orderId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    OrderedPart orderedPart = new OrderedPart();
+                    orderedPart.setId(rs.getInt("id"));
+                    orderedPart.setPartId(rs.getInt("part_id"));
+                    orderedPart.setQuantity(rs.getInt("quantity"));
+                    orderedPart.setOrderDate(rs.getDate("order_date"));
+                    orderedPart.setStatus(rs.getString("status"));
+                    return orderedPart;
+                }
+            }
+        }
+        return null;
+    }
+
 }
