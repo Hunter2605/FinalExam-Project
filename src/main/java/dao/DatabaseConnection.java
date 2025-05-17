@@ -9,7 +9,7 @@ public class DatabaseConnection {
 
     public static Connection getConnection() throws SQLException {
         if (connection == null || connection.isClosed()) {
-            String url = "jdbc:mysql://localhost:3306/phone_repair";
+            String url = "jdbc:mysql://localhost:3306/phone_repair?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
             String username = "root";
             String password = "password";
             connection = DriverManager.getConnection(url, username, password);
