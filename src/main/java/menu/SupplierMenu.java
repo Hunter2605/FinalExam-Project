@@ -70,7 +70,7 @@ public class SupplierMenu {
         System.out.print("\nВведите ID заказа для доставки: ");
         int orderId = Integer.parseInt(scanner.nextLine());
 
-        int supplierId = 1; // Здесь нужно получить ID поставщика из базы данных
+        int supplierId = 1;
 
         if (supplierService.deliverPart(orderId, supplierId)) {
             System.out.println("Запчасть успешно доставлена.");

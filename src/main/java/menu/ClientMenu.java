@@ -122,7 +122,6 @@ public class ClientMenu {
         System.out.print("Введите количество: ");
         int quantity = Integer.parseInt(scanner.nextLine());
 
-        // Получаем ID клиента
         int clientId = authService.getUserId(username);
 
         Repair repair = new Repair();
@@ -142,11 +141,143 @@ public class ClientMenu {
     }
 
     private void replacePart() {
-        // Аналогичная реализация для замены детали
+        System.out.println("\nВыберите, что вы хотите заменить в своей технике:");
+        System.out.println("1. Батарею - 25$");
+        System.out.println("2. Дисплей - 50$");
+        System.out.println("3. Процессор - 100$");
+        System.out.println("4. Материнскую плату - 80$");
+        System.out.println("5. Оперативную память - 30$");
+        System.out.print(">>> ");
+
+        int partChoice = Integer.parseInt(scanner.nextLine());
+        String partName = "";
+        double partPrice = 0;
+        int repairDays = 0;
+
+        switch (partChoice) {
+            case 1:
+                partName = "Батарея";
+                partPrice = 25;
+                repairDays = 1;
+                break;
+            case 2:
+                partName = "Дисплей";
+                partPrice = 50;
+                repairDays = 2;
+                break;
+            case 3:
+                partName = "Процессор";
+                partPrice = 100;
+                repairDays = 3;
+                break;
+            case 4:
+                partName = "Материнская плата";
+                partPrice = 80;
+                repairDays = 4;
+                break;
+            case 5:
+                partName = "Оперативная память";
+                partPrice = 30;
+                repairDays = 1;
+                break;
+            default:
+                System.out.println("Неверный выбор");
+                return;
+        }
+
+        System.out.print("Введите тип техники (телефон): ");
+        String deviceType = scanner.nextLine();
+
+        System.out.print("Введите модель: ");
+        String model = scanner.nextLine();
+
+        System.out.print("Введите производителя: ");
+        String manufacturer = scanner.nextLine();
+
+        System.out.print("Введите описание: ");
+        String description = "Замена " + partName;
+
+        System.out.print("Введите количество: ");
+        int quantity = Integer.parseInt(scanner.nextLine());
+
+        int clientId = authService.getUserId(username);
+
+        Repair repair = new Repair();
+        repair.setDeviceType(deviceType);
+        repair.setModel(model);
+        repair.setManufacturer(manufacturer);
+        repair.setDescription(description);
+        repair.setQuantity(quantity);
+        repair.setRepairCost(partPrice);
+        repair.setRequiredMaterials(partName);
+        repair.setRepairDays(repairDays);
+        repair.setClientId(clientId);
+
+        clientService.submitForRepair(repair);
+
+        System.out.println("Ваш заказ на замену принят. Ориентировочная дата завершения: " +
+                LocalDate.now().plusDays(repairDays));
     }
 
     private void performService() {
-        // Аналогичная реализация для обслуживания
+        System.out.println("\nПожалуйста выберите тип обслуживания:");
+        System.out.println("1. Чистка от пыли - 15$");
+        System.out.println("2. Чистка от царапин - 20$");
+        System.out.print(">>> ");
+
+        int serviceType = Integer.parseInt(scanner.nextLine());
+        String serviceName = "";
+        double serviceCost = 0;
+        int serviceDays = 0;
+
+        switch (serviceType) {
+            case 1:
+                serviceName = "Чистка от пыли";
+                serviceCost = 15;
+                serviceDays = 1;
+                break;
+            case 2:
+                serviceName = "Чистка от царапин";
+                serviceCost = 20;
+                serviceDays = 2;
+                break;
+            default:
+                System.out.println("Неверный выбор");
+                return;
+        }
+
+        System.out.print("Введите тип техники (телефон): ");
+        String deviceType = scanner.nextLine();
+
+        System.out.print("Введите модель: ");
+        String model = scanner.nextLine();
+
+        System.out.print("Введите производителя: ");
+        String manufacturer = scanner.nextLine();
+
+        System.out.print("Введите описание: ");
+        String description = serviceName;
+
+        System.out.print("Введите количество: ");
+        int quantity = Integer.parseInt(scanner.nextLine());
+
+        int clientId = authService.getUserId(username);
+
+        Repair repair = new Repair();
+        repair.setDeviceType(deviceType);
+        repair.setModel(model);
+        repair.setManufacturer(manufacturer);
+        repair.setDescription(description);
+        repair.setQuantity(quantity);
+        repair.setRepairCost(serviceCost);
+        repair.setRequiredMaterials(serviceName);
+        repair.setRepairDays(serviceDays);
+        repair.setClientId(clientId);
+
+        clientService.submitForRepair(repair);
+
+        System.out.println("Ваш заказ на обслуживание принят. Ориентировочная дата завершения: " +
+                LocalDate.now().plusDays(serviceDays));
     }
 
     private void checkStatus() {

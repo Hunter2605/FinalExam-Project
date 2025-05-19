@@ -14,7 +14,16 @@ public class Main {
         while (true) {
             System.out.println("Для запуска программы, пожалуйста введите тип аккаунта:");
             System.out.print(">>> ");
-            String accountType = scanner.nextLine();
+            String accountType = scanner.nextLine().toLowerCase();
+
+            if (!accountType.equals("client") &&
+                    !accountType.equals("repair") &&
+                    !accountType.equals("worker") &&
+                    !accountType.equals("supplier")) {
+                System.out.println("Извините, но мы не нашли такой тип аккаунта, пожалуйста повторите.");
+                continue;
+            }
+
 
             System.out.print("Введите логин: ");
             String username = scanner.nextLine();

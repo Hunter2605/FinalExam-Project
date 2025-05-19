@@ -104,11 +104,29 @@ public class WorkerMenu {
     }
 
     private void showLargestOrder() {
-        // Реализация показа самого большого заказа
+        Repair largest = workerService.getLargestOrder();
+        if (largest != null) {
+            System.out.println("\nСамый большой заказ:");
+            System.out.println("Модель: " + largest.getModel());
+            System.out.println("Производитель: " + largest.getManufacturer());
+            System.out.println("Описание: " + largest.getDescription());
+            System.out.println("Стоимость: " + largest.getRepairCost());
+        } else {
+            System.out.println("Нет данных для самого большого заказа.");
+        }
     }
 
     private void showSmallestOrder() {
-        // Реализация показа самого маленького заказа
+        Repair smallest = workerService.getSmallestOrder();
+        if (smallest != null) {
+            System.out.println("\nСамый маленький заказ:");
+            System.out.println("Модель: " + smallest.getModel());
+            System.out.println("Производитель: " + smallest.getManufacturer());
+            System.out.println("Описание: " + smallest.getDescription());
+            System.out.println("Стоимость: " + smallest.getRepairCost());
+        } else {
+            System.out.println("Нет данных для самого маленького заказа.");
+        }
     }
 
     private void showStatistics() {

@@ -28,6 +28,15 @@ public class RepairmanService {
         }
     }
 
+    public List<Repair> getPendingReplacements() {
+        try {
+            return repairDAO.getPendingReplacements();
+        } catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public boolean completeRepair(int repairId) {
         try {
             repairDAO.updateRepairStatus(repairId, "completed");

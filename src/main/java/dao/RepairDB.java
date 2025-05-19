@@ -103,11 +103,12 @@ public class RepairDB {
         }
         return null;
     }
+
     public List<Repair> getRepairsByType(String type) throws SQLException {
         List<Repair> repairs = new ArrayList<>();
         String sql = "SELECT * FROM repairs WHERE description LIKE ? AND status = 'pending' ";
         try (Connection conn = DatabaseConnection.getConnection();
-        PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, "%" + type + "%");
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
@@ -131,10 +132,11 @@ public class RepairDB {
         }
         return repairs;
     }
+
     public int getRepairCountByType(String type) throws SQLException {
         String sql = "SELECT COUNT(*) FROM repairs WHERE description LIKE ?";
         try (Connection conn = DatabaseConnection.getConnection();
-        PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, "%" + type + "%");
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -144,6 +146,7 @@ public class RepairDB {
         }
         return 0;
     }
+
     public Repair getRepairByModelAndClient(String model, int clientId) throws SQLException {
         String sql = "SELECT * FROM repairs WHERE model = ? AND client_id = ?";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -176,4 +179,33 @@ public class RepairDB {
         return null;
     }
 
+    public List<Repair> getPendingReplacements() throws SQLException {
+        List<Repair> repairs = new ArrayList<>();
+        String sql = "SELECT * FROM repairs WHERE status = 'pending'";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Repair repair = new Repair();
+                repair.setId(rs.getInt("id"));
+                repair.setDeviceType(rs.getString("device_type"));
+                repair.setModel(rs.getString("model"));
+                repair.setManufacturer(rs.getString("manufacturer"));
+                repair.setDescription(rs.getString("description"));
+                repair.setQuantity(rs.getInt("quantity"));
+                repair.setRepairCost(rs.getDouble("repair_cost"));
+                repair.setRequiredMaterials(rs.getString("required_materials"));
+                repair.setRepairDays(rs.getInt("repair_days"));
+                repair.setClientId(rs.getInt("client_id"));
+                repair.setStatus(rs.getString("status"));
+                repair.setStartDate(rs.getDate("start_date"));
+                repair.setEndDate(rs.getDate("end_date"));
+
+                repairs.add(repair);
+            }
+        }
+        return repairs;
+    }
 }

@@ -3,6 +3,7 @@ package service;
 import dao.RepairDB;
 import model.Repair;
 import java.sql.SQLException;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
@@ -52,5 +53,15 @@ public class WorkerService {
             e.printStackTrace();
             return null;
         }
+    }
+    public Repair getLargestOrder() {
+        return getRepairsForRepair().stream()
+                .max(Comparator.comparingDouble(Repair::getRepairCost))
+                .orElse(null);
+    }
+    public Repair getSmallestOrder() {
+        return getRepairsForRepair().stream()
+                .min(Comparator.comparingDouble(Repair::getRepairCost))
+                .orElse(null);
     }
 }

@@ -85,15 +85,57 @@ public class RepairmanMenu {
     }
 
     private void performReplacement() {
-        // Аналогичная реализация для замены детали
+        List<Repair> replacements = repairmanService.getPendingReplacements();
+        if (replacements == null || replacements.isEmpty()) {
+            System.out.println("Нет устройств, ожидающих замены деталей.");
+            return;
+        }
+
+        System.out.println("\nСписок техники для замены деталей:");
+        for (Repair replacement : replacements) {
+            System.out.println("ID: " + replacement.getId() +
+                    ", Модель: " + replacement.getModel() +
+                    ", Деталь для замены: " + replacement.getRequiredMaterials());
+        }
+
+        System.out.print("\nВведите ID устройства, в котором вы заменили деталь: ");
+        int replacementId = Integer.parseInt(scanner.nextLine());
+
     }
 
     private void performService() {
-        // Аналогичная реализация для обслуживания
+        List<Repair> services = repairmanService.getPendingRepairs();
+        if (services == null || services.isEmpty()) {
+            System.out.println("Нет устройств, ожидающих обслуживания.");
+            return;
+        }
+
+        System.out.println("\nСписок техники для обслуживания:");
+        for (Repair service : services) {
+            System.out.println("ID: " + service.getId() +
+                    ", Модель: " + service.getModel() +
+                    ", Тип обслуживания: " + service.getDescription());
+        }
+
+        System.out.print("\nВведите ID устройства, которое вы обслужили: ");
+        int serviceId = Integer.parseInt(scanner.nextLine());
+
     }
 
     private void orderParts() {
-        // Реализация заказа запчастей
+        System.out.println("\nДоступные запчасти:");
+
+        System.out.print("Введите ID запчасти для заказа: ");
+        int partId = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Введите количество: ");
+        int quantity = Integer.parseInt(scanner.nextLine());
+
+        if (repairmanService.orderPart(partId, quantity)) {
+            System.out.println("Запчасть успешно заказана.");
+        } else {
+            System.out.println("Ошибка при заказе запчасти.");
+        }
     }
 
     private void showOrderedParts() {
